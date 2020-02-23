@@ -1,0 +1,25 @@
+{
+    "Operations": [
+        "Setup",
+        "Check-In",
+        "Help Desk",
+        "Opening Ceremony",
+        "Hardware Lab",
+        "Judging",
+        "Closing Ceremony",
+        "Cleaning"
+    ],
+    "Sponsoring": [
+        "Contacting a Potential Sponsor",
+        "Ways to get Funding"
+    ],
+    "Technology": [
+        "Understanding Hacklahoma Hub Website"
+    ],
+    "Marketing": [
+        "Marketing Hacklahoma"
+    ],
+    "Miscellaneous": [
+        "Who is Asterisk?"
+    ]
+}

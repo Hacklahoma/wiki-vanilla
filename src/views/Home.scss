@@ -1,0 +1,59 @@
+
+.Home {
+    .header {
+        margin-top: 40px;
+        text-align: center;
+    }
+    .grid {
+        margin: auto;
+        // border: 1px solid green;
+        width: 100vw;
+        max-width: 610px;
+        margin-top: 50px;
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+        .category {
+            // background: red;
+            width: 300px;
+            padding: 0 0 30px 0;
+            .divider {
+                height: 2px;
+                width: 70%;
+                margin: 8px 0;
+                background: #F1F1F0;
+            }
+            h1 {
+                margin: 0;
+            }
+            .item {
+                margin: 4px 0;
+                white-space: nowrap;
+                .icon {
+                    height: 15px;
+                    width: 15px;
+                    margin: 0 5px -2px 0;
+                }
+                .link {
+                    text-decoration: none;
+                    color: black;
+                }
+            }
+            .item:hover {
+                .link, .icon {
+                    color: rgb(74, 91, 190);
+                }
+            }
+        }
+    }
+}
+
+// Centers grid with one column for mobile users
+@media (max-width: 630px) {
+    .Home {
+        .grid {
+            flex-flow: column;
+            height: auto !important;
+        }
+    }
+}
