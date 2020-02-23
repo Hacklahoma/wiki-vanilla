@@ -1,16 +1,16 @@
 @font-face {
   font-family: "Avenir";
-  src: url(./fonts/Avenir/Avenir-Black.ttf);
+  src: url(./fonts/Avenir/Avenir-Heavy.ttf);
   font-weight: 900;
 }
 @font-face {
   font-family: "Avenir";
-  src: url(./fonts/Avenir/Avenir-Heavy.ttf);
+  src: url(./fonts/Avenir/Avenir-Medium.ttf);
   font-weight: 700;
 }
 @font-face {
   font-family: "Avenir";
-  src: url(./fonts/Avenir/Avenir-Medium.ttf);
+  src: url(./fonts/Avenir/Avenir-Book.ttf);
   font-weight: 400;
 }
 

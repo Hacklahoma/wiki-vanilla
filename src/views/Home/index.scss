@@ -22,7 +22,7 @@
     }
     .header {
         margin-top: 40px;
-        font-weight: 800;
+        font-weight: 900;
         text-align: center;
     }
     .grid {
@@ -41,31 +41,38 @@
                 background: #F1F1F0;
             }
             h1 {
+                font-weight: 700;
                 margin: 0;
             }
             .link {
                 margin: 4px 0;
                 white-space: nowrap;
                 text-decoration: none;
-                transition: color .3s;
                 color: black;
                 .icon {
                     height: 15px;
                     width: 15px;
                     margin: 0 5px -2px 0;
                 }
+                .item {transition: .3s;}
             }
             .link.complete {
-                color: black;
+                .icon {
+                    color: rgb(60, 158, 41);
+                }
             }
             .link.transition {
-                color: rgb(243, 166, 0);
+                .icon {
+                    color: rgb(243, 166, 0);
+                }
             }
             .link.incomplete {
-                color: rgb(233, 80, 80);
+                .icon {
+                    color: rgb(233, 80, 80);
+                }
             }
             .link:hover {
-                color: $blue;
+                text-decoration: underline;
             }
         }
     }
