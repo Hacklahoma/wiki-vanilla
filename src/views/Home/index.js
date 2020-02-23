@@ -10,6 +10,7 @@ class Home extends Component {
         this.state = {
             categories: null,
             pages: [],
+            status: [],
             loading: true,
             name: "",
             category: "",
@@ -31,15 +32,18 @@ class Home extends Component {
 
         // Getting data from the pages collection (all the individual page docs)
         setup.collection("pages").get().then(snapshot => {
-            // Setting up array to hold pages
+            // Setting up array to hold page attributes
             var pages = [];
+            var status = [];
             // Storing names in array
             snapshot.forEach(doc => {
                 pages[doc.id] = doc.data().name
+                status[doc.id] = doc.data().status;
             })
             // Setting state to store pages
             this.setState({
-                pages: pages
+                pages: pages,
+                status: status,
             })
         }).then(() => {
             // Then, set loading to false
@@ -130,9 +134,11 @@ class Home extends Component {
                 // Storing item to find in pages array into item
                 item = this.state.categories[category][page];
                 // Adding each individual category item to result
+                console.log(this.state.status[item]);
+                
                 categoryContainer.push(
-                    <Link className="link" to={"/" + item}>
-                        <div key={item} className="item">
+                    <Link key={item} className={"link " + this.state.status[item]} to={"/" + item}>
+                        <div className="item">
                             <DescriptionOutlined className="icon" />
                             {this.state.pages[item]}
                         </div>
@@ -149,7 +155,7 @@ class Home extends Component {
     render() {
         if(!this.state.loading)
             return (
-                <div className="Home">
+                <div className="Home container">
                     <Link to="/settings">
                         <Settings className="settingsIcon" />
                     </Link>

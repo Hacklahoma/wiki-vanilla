@@ -1,3 +1,5 @@
+@use '../../config/styling' as *;
+
 .Home {
     text-align: left;
     display: inline-block;
@@ -25,8 +27,6 @@
     }
     .grid {
         margin: auto;
-        width: 100vw;
-        max-width: 690px;
         margin-top: 50px;
         display: flex;
         flex-flow: column wrap;
@@ -47,6 +47,7 @@
                 margin: 4px 0;
                 white-space: nowrap;
                 text-decoration: none;
+                transition: color .3s;
                 color: black;
                 .icon {
                     height: 15px;
@@ -54,8 +55,17 @@
                     margin: 0 5px -2px 0;
                 }
             }
+            .link.complete {
+                color: black;
+            }
+            .link.transition {
+                color: rgb(243, 166, 0);
+            }
+            .link.incomplete {
+                color: rgb(233, 80, 80);
+            }
             .link:hover {
-                color: rgb(74, 91, 190);
+                color: $blue;
             }
         }
     }

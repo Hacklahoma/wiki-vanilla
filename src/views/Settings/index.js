@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import HomeButton from '../../components/HomeButton'
+import PageHeader from "../../components/PageHeader";
 
 export class Settings extends Component {
     render() {
         return (
-            <div>
-                <HomeButton />
-                Settings
+            <div className="Settings container">
+                <PageHeader title="Settings" to="home" />
             </div>
-        )
+        );
     }
 }
 

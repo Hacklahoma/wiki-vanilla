@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
 import firebase from "../../config/firebase";
+import PageHeader from '../../components/PageHeader'
 import './index.scss'
 
 class Page extends Component {
@@ -51,17 +52,15 @@ class Page extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Success {this.state.name}</h1>
-                <div style={{ padding: "30px" }}>
-                    <ReactMarkdown source={this.state.markdown} escapeHtml={false} />
-                </div>
+            <div className="Page container">
+                <PageHeader to="home" title={this.state.name} />
+
+                <ReactMarkdown source={this.state.markdown} escapeHtml={false} />
 
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Markdown:
-                        <textarea value={this.state.value} onChange={this.handleChange} />
-                    </label>
+                    <h3>Edit</h3>
+                    <textarea value={this.state.value} onChange={this.handleChange} />
+                    <br />
                     <input type="submit" value="Submit" />
                 </form>
             </div>

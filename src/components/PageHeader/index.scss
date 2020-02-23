@@ -1,0 +1,36 @@
+@use '../../config/styling' as *;
+
+.PageHeader {
+    text-align: left;
+    .wrapper {
+        padding-top: 50px;
+        padding-bottom: 50px;
+        // background: salmon;
+        display: inline-block;
+        text-align: left;
+        .button {
+            color: $blue;
+            display: inline-block;
+            // background: red;
+            text-decoration: none;
+            border-radius: 4px;
+            padding: 4px;
+            transition: background .5s;
+            p {
+                display: inline-block;
+            }
+            .icon {
+                // float: left;
+                display: inline-block;
+                margin: 0 0 -6px -2px;
+                padding: 0 4px 0 0;
+            }
+        }
+        .button:hover {
+            background: rgb(241, 241, 241);
+        }
+        h1 {
+            margin-top: 30px;
+        }
+}
+}
