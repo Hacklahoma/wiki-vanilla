@@ -1,21 +1,38 @@
-
 .Home {
+    text-align: left;
+    display: inline-block;
+    width: 100vw;
+    max-width: 800px;
+    position: relative;
+    .settingsIcon {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        height: 25px;
+        width: 25px;
+        transition: .5s;
+        cursor: pointer;
+        color: rgb(44, 44, 44);
+    }
+    .settingsIcon:hover {
+        transform: rotate(30deg);
+        color: rgb(0, 0, 0);
+    }
     .header {
         margin-top: 40px;
+        font-weight: 800;
         text-align: center;
     }
     .grid {
         margin: auto;
-        // border: 1px solid green;
         width: 100vw;
-        max-width: 610px;
+        max-width: 690px;
         margin-top: 50px;
         display: flex;
         flex-flow: column wrap;
         align-items: center;
         .category {
-            // background: red;
-            width: 300px;
+            width: 320px;
             padding: 0 0 30px 0;
             .divider {
                 height: 2px;
@@ -26,30 +43,26 @@
             h1 {
                 margin: 0;
             }
-            .item {
+            .link {
                 margin: 4px 0;
                 white-space: nowrap;
+                text-decoration: none;
+                color: black;
                 .icon {
                     height: 15px;
                     width: 15px;
                     margin: 0 5px -2px 0;
                 }
-                .link {
-                    text-decoration: none;
-                    color: black;
-                }
             }
-            .item:hover {
-                .link, .icon {
-                    color: rgb(74, 91, 190);
-                }
+            .link:hover {
+                color: rgb(74, 91, 190);
             }
         }
     }
 }
 
 // Centers grid with one column for mobile users
-@media (max-width: 630px) {
+@media (max-width: 700px) {
     .Home {
         .grid {
             flex-flow: column;

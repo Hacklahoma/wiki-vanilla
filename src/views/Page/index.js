@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
-import firebase from "../config/firebase";
+import firebase from "../../config/firebase";
+import './index.scss'
 
 class Page extends Component {
     constructor() {

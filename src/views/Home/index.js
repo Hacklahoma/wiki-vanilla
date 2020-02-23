@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import firebase from '../config/firebase'
-import Pages from "@material-ui/icons/DescriptionOutlined";
-import './Home.scss'
+import firebase from '../../config/firebase'
+import { DescriptionOutlined, Settings } from "@material-ui/icons";
+import './index.scss'
 
 class Home extends Component {
     constructor() {
@@ -131,12 +131,12 @@ class Home extends Component {
                 item = this.state.categories[category][page];
                 // Adding each individual category item to result
                 categoryContainer.push(
-                    <div key={item} className="item">
-                        <Pages className="icon" />
-                        <Link className="link" to={"/" + item}>
+                    <Link className="link" to={"/" + item}>
+                        <div key={item} className="item">
+                            <DescriptionOutlined className="icon" />
                             {this.state.pages[item]}
-                        </Link>
-                    </div>
+                        </div>
+                    </Link>
                 );
             }
             results.push(<div key={category} className="category">{categoryContainer}</div>);
@@ -150,6 +150,9 @@ class Home extends Component {
         if(!this.state.loading)
             return (
                 <div className="Home">
+                    <Link to="/settings">
+                        <Settings className="settingsIcon" />
+                    </Link>
                     <h1 className="header">Hacklahoma Wiki</h1>
                     <div className="grid">{this.renderCategories()}</div>
                     <form onSubmit={this.newPage}>
