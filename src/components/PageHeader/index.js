@@ -30,6 +30,7 @@ export class PageHeader extends Component {
                 <div className="wrapper">
                     {this.toLogic()}
                     <h1>{this.props.title}</h1>
+                    <div className="divider" />
                 </div>
             </div>
         );

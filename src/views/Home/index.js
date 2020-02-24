@@ -2,24 +2,49 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import firebase from '../../config/firebase'
 import { DescriptionOutlined, Settings } from "@material-ui/icons";
+import { withRouter } from "react-router"
 import './index.scss'
 
 class Home extends Component {
     constructor() {
         super();
+        /**
+         * @categories stores all the categories from firestore doc 'pagesConfig'
+         * @pages stores all the pages from firestore collection 'pages' (use pages[raw-name] for display name, eg. pages[check-in] = 'Check In')
+         * @status stores status of page (use status[raw-name] for status)
+         * @loading whether component is loading
+         * @name: holds name of new page
+         * @category holds category of new page
+         * @user holds slack access key of user (stored in localStorage)
+         */
         this.state = {
-            categories: null,
+            categories: [],
             pages: [],
             status: [],
             loading: true,
             name: "",
             category: "",
+            user: null,
         };
         this.handleChange = this.handleChange.bind(this);
         this.newPage = this.newPage.bind(this);
     }
 
     componentDidMount() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const user = urlParams.get("user");
+        this.props.history.push('/');
+        if(user != null) {
+            localStorage.setItem("user", user);
+        }
+        this.setState({
+            user: localStorage.getItem('user')
+        })
+        if(localStorage.getItem('user') === null) {
+            this.props.history.push("/login");
+            return;
+        }
+
         // Getting firestore document reference
         var setup = firebase.firestore()
 
@@ -133,11 +158,9 @@ class Home extends Component {
             for (var page in this.state.categories[category]) {
                 // Storing item to find in pages array into item
                 item = this.state.categories[category][page];
-                // Adding each individual category item to result
-                console.log(this.state.status[item]);
-                
+                // Adding each individual category item to result                
                 categoryContainer.push(
-                    <Link key={item} className={"link " + this.state.status[item]} to={"/" + item}>
+                    <Link key={item} className={"link " + this.state.status[item]} to={"/p/" + item}>
                         <div className="item">
                             <DescriptionOutlined className="icon" />
                             {this.state.pages[item]}
@@ -194,4 +217,4 @@ class Home extends Component {
     }
 }
 
-export default Home
+export default withRouter(Home);

@@ -1,16 +1,20 @@
-import React from 'react'
-import { BrowserRouter, Switch, Route } from "react-router-dom"
-import Home from './views/Home'
-import Page from './views/Page'
-import Settings from './views/Settings'
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Home from "./views/Home";
+import Page from "./views/Page";
+import Login from "./views/Login";
+import Auth from "./views/Auth";
+import Settings from "./views/Settings";
 
 function Router() {
     return (
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" component={Home} />
+                <Route exact path="/login" component={Login} />
+                <Route path="/auth" component={Auth} />
                 <Route exact path="/settings" component={Settings} />
-                <Route path="/:page" component={Page} />
+                <Route path="/p/:page" component={Page} />
             </Switch>
         </BrowserRouter>
     );
