@@ -1,0 +1,28 @@
+.Settings {
+    position: relative;
+    width: calc(100% - 70px);
+    margin: 30px auto;
+    .settingsItem {
+        cursor: pointer;
+        margin: 12px 0;
+        .icon {
+            margin-right: 8px;
+        }
+        p {
+            display: inline-block;
+        }
+    }
+    .settingsItem:hover, .close:hover {
+        p {
+            text-decoration: underline;
+        }
+    }
+    .close {
+        width: 100px;
+        margin: auto;
+        text-align: center;
+        cursor: pointer;
+        color: gray;
+        margin-top: 120px;
+    }
+}

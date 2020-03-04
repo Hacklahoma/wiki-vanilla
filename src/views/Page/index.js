@@ -55,11 +55,17 @@ class Page extends Component {
             <div className="Page container">
                 <PageHeader to="home" title={this.state.name} />
 
-                <ReactMarkdown source={this.state.markdown} escapeHtml={false} />
+                <ReactMarkdown
+                    source={this.state.markdown}
+                    escapeHtml={false}
+                />
 
                 <form onSubmit={this.handleSubmit}>
                     <h3>Edit</h3>
-                    <textarea value={this.state.value} onChange={this.handleChange} />
+                    <textarea
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                    />
                     <br />
                     <input type="submit" value="Submit" />
                 </form>

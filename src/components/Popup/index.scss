@@ -1,0 +1,63 @@
+@use '../../config/styling' as *;
+
+.Popup {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    animation: background .2s;
+    background: rgba(0,0,0,.2);
+    cursor: pointer;
+    .popupContainer {
+        box-shadow: 0px 3px 30px rgba(0,0,0,.18);
+        animation: popup .2s;
+        $borderRadius: 12px;
+        position: relative;
+        margin: auto;
+        top: 50%;
+        transform-origin: top;
+        transform: translateY(-50%);
+        cursor: auto;
+        background: white;
+        border-radius: $borderRadius;
+        width: 80vw;
+        max-width: 320px;
+        height: 400px;
+        .popupHeader {
+            position: relative;
+            border-top-right-radius: $borderRadius;
+            border-top-left-radius: $borderRadius;
+            margin: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background: $blue;
+            h2 {
+                position: absolute;
+                bottom: 10px;
+                left: 35px;
+                font-weight: 900;
+                font-size: 2em;
+                color: white;
+            }
+        }
+    }
+}
+
+@keyframes background {
+    0% {
+        background: rgba(0,0,0,0);
+    }
+    100% {
+        background: rgba(0,0,0,.2)
+    }
+}
+
+@keyframes popup {
+    0% {
+        transform: scale(0) translateY(-50%);
+    }
+    100% {
+        transform: scale(1) translateY(-50%);
+    }
+}

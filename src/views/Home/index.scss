@@ -1,78 +1,93 @@
 @use '../../config/styling' as *;
 
 .Home {
-    text-align: left;
-    display: inline-block;
+    height: 100vh;
     width: 100vw;
-    max-width: 800px;
-    position: relative;
-    .settingsIcon {
-        position: absolute;
-        top: 20px;
-        right: 30px;
-        height: 25px;
-        width: 25px;
-        transition: .5s;
-        cursor: pointer;
-        color: rgb(44, 44, 44);
-    }
-    .settingsIcon:hover {
-        transform: rotate(30deg);
-        color: rgb(0, 0, 0);
-    }
-    .header {
-        margin-top: 40px;
-        font-weight: 900;
-        text-align: center;
-    }
-    .grid {
-        margin: auto;
-        margin-top: 50px;
-        display: flex;
-        flex-flow: column wrap;
-        align-items: center;
-        .category {
-            width: 320px;
-            padding: 0 0 30px 0;
-            .divider {
-                height: 2px;
-                width: 70%;
-                margin: 8px 0;
-                background: $whitesmoke;
-            }
-            h1 {
-                font-weight: 700;
-                margin: 0 0 -5px 0;
-            }
-            .link {
-                margin: 4px 0;
-                white-space: nowrap;
-                text-decoration: none;
-                color: black;
-                .icon {
-                    height: 15px;
-                    width: 15px;
-                    margin: 0 5px -2px 0;
+    .container {
+        text-align: left;
+        display: inline-block;
+        width: 100vw;
+        max-width: 800px;
+        position: relative;
+        .actionIcon {
+            position: absolute;
+            top: 20px;
+            height: 25px;
+            width: 25px;
+            cursor: pointer;
+            color: rgb(44, 44, 44);
+            transition: 0.5s;
+        }
+        .settingsIcon {
+            right: 30px;
+        }
+        .settingsIcon:hover {
+            transform: rotate(30deg);
+            color: rgb(0, 0, 0);
+        }
+        .newPageIcon {
+            right: 30px + 25px + 15px;
+        }
+        .newPageIcon:hover {
+            transform: rotate(5deg);
+            color: rgb(0, 0, 0);
+        }
+        .header {
+            margin-top: 40px;
+            font-weight: 900;
+            text-align: center;
+        }
+        .grid {
+            margin: auto;
+            margin-top: 50px;
+            display: flex;
+            flex-flow: column wrap;
+            align-items: center;
+            .category {
+                width: 320px;
+                padding: 0 0 30px 0;
+                .divider {
+                    height: 2px;
+                    width: 70%;
+                    margin: 8px 0;
+                    background: $whitesmoke;
                 }
-                .item {transition: .3s;}
-            }
-            .link.complete {
-                .icon {
-                    color: rgb(60, 158, 41);
+                h1 {
+                    font-weight: 700;
+                    margin: 0 0 -5px 0;
                 }
-            }
-            .link.transition {
-                .icon {
-                    color: rgb(243, 166, 0);
+                .link {
+                    margin: 4px 0;
+                    white-space: nowrap;
+                    text-decoration: none;
+                    color: black;
+                    .icon {
+                        height: 15px;
+                        width: 15px;
+                        margin: 0 5px -2px 0;
+                    }
+                    .item {
+                        transition: 0.3s;
+                    }
                 }
-            }
-            .link.incomplete {
-                .icon {
-                    color: rgb(233, 80, 80);
+                .link.complete {
+                    .icon {
+                        color: rgb(60, 158, 41);
+                    }
                 }
-            }
-            .link:hover {
-                text-decoration: underline;
+                .link.transition {
+                    .icon {
+                        color: rgb(243, 166, 0);
+                    }
+                }
+                .link.incomplete {
+                    .icon {
+                        color: rgb(233, 80, 80);
+                    }
+                }
+                .link:hover {
+                    text-decoration: underline;
+                }
             }
         }
     }
@@ -81,9 +96,11 @@
 // Centers grid with one column for mobile users
 @media (max-width: 700px) {
     .Home {
-        .grid {
-            flex-flow: column;
-            height: auto !important;
+        .container {
+            .grid {
+                flex-flow: column;
+                height: auto !important;
+            }
         }
     }
 }

@@ -40,7 +40,9 @@ export class Settings extends Component {
                     <h3>Export</h3>
                     <p>Export all markdown files.</p>
                 </div>
-                <div className="item">
+                <div onClick={() => {
+                    localStorage.removeItem('user');
+                }}className="item">
                     <h3>Logout</h3>
                     <p>Logout of account.</p>
                 </div>
