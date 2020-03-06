@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import ReactMarkdown from "react-markdown";
+import React, { Component } from "react"; 
 import firebase from "../../config/firebase";
-import PageHeader from '../../components/PageHeader'
-import './index.scss'
+import PageHeader from "../../components/PageHeader";
+import "./index.scss";
+import EditorJS from "@editorjs/editorjs";
+import Header from "@editorjs/header";
 
 class Page extends Component {
     constructor() {
@@ -12,6 +13,8 @@ class Page extends Component {
             value: "",
             name: "",
             doc: null,
+            editor: null,
+            data: {},
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,17 +29,68 @@ class Page extends Component {
 
         // Setting reference to state
         this.setState({
-            doc: setup
+            doc: setup,
         });
 
         // Getting markdown as raw content and setting to state
         setup.get().then(doc => {
             this.setState({
-                markdown: doc.data().content,
-                value: doc.data().content,
-                name: doc.data().name
+                value: "deprecated",
+                name: doc.data().name,
+            });
+            const editor = new EditorJS({
+                /**
+                 * Id of Element that should contain the Editor
+                 */
+                holderId: "codex-editor",
+                /**
+                 * Available Tools list.
+                 * Pass Tool's class or Settings object for each Tool you want to use
+                 */
+                tools: {
+                    header: {
+                        class: Header,
+                        config: {
+                            placeholder: "Enter a header",
+                            levels: [1, 2, 3, 4],
+                            defaultLevel: 1,
+                        },
+                    },
+                },
+                /**
+                 * Previously saved data that should be rendered
+                 */
+                data: doc.data().data,
+                /**
+                 * onReady callback
+                 */
+                onReady: () => {
+                    console.log("Editor.js is ready to work!");
+                },
+                /**
+                 * Fires when something changed in DOM
+                 */
+                onChange: () => {
+                    this.saveData();
+                },
+            });
+
+            this.setState({
+                editor: editor,
             });
         });
+    }
+
+    saveData() {
+        this.state.editor
+            .save()
+            .then(outputData => {
+                this.state.doc.update({ data: outputData });
+                console.log("Article data: ", outputData);
+            })
+            .catch(error => {
+                console.log("Saving failed: ", error);
+            });
     }
 
     handleChange(event) {
@@ -54,21 +108,7 @@ class Page extends Component {
         return (
             <div className="Page container">
                 <PageHeader to="home" title={this.state.name} />
-
-                <ReactMarkdown
-                    source={this.state.markdown}
-                    escapeHtml={false}
-                />
-
-                <form onSubmit={this.handleSubmit}>
-                    <h3>Edit</h3>
-                    <textarea
-                        value={this.state.value}
-                        onChange={this.handleChange}
-                    />
-                    <br />
-                    <input type="submit" value="Submit" />
-                </form>
+                <div id="codex-editor" />
             </div>
         );
     }
