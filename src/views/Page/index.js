@@ -1,26 +1,25 @@
-import React, { Component } from "react"; 
+import React, { Component } from "react";
 import firebase from "../../config/firebase";
 import PageHeader from "../../components/PageHeader";
 import "./index.scss";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
+import { withRouter } from "react-router-dom";
 
 class Page extends Component {
     constructor() {
         super();
         this.state = {
-            markdown: "",
-            value: "",
             name: "",
             doc: null,
             editor: null,
-            data: {},
+            exists: false,
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
+        console.log(this.props.match.params.page);
+
         // Getting firestore document reference
         var setup = firebase
             .firestore()
@@ -34,10 +33,19 @@ class Page extends Component {
 
         // Getting markdown as raw content and setting to state
         setup.get().then(doc => {
-            this.setState({
-                value: "deprecated",
-                name: doc.data().name,
-            });
+            // Making sure document exists before proceeding
+            if (doc.exists) {
+                this.setState({
+                    exists: true,
+                    name: doc.data().name,
+                });
+            } else {
+                // Document does not exists, 404.
+                this.props.history.push("/404");
+                return;
+            }
+
+            // Setting up editor
             const editor = new EditorJS({
                 /**
                  * Id of Element that should contain the Editor
@@ -48,6 +56,7 @@ class Page extends Component {
                  * Pass Tool's class or Settings object for each Tool you want to use
                  */
                 tools: {
+                    // Header tool
                     header: {
                         class: Header,
                         config: {
@@ -74,7 +83,7 @@ class Page extends Component {
                     this.saveData();
                 },
             });
-
+            // Saving editor state
             this.setState({
                 editor: editor,
             });
@@ -86,32 +95,22 @@ class Page extends Component {
             .save()
             .then(outputData => {
                 this.state.doc.update({ data: outputData });
-                console.log("Article data: ", outputData);
             })
             .catch(error => {
                 console.log("Saving failed: ", error);
             });
     }
 
-    handleChange(event) {
-        this.setState({ value: event.target.value });
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        var val = this.state.value;
-        console.log(val);
-        this.state.doc.update({ content: val });
-    }
-
     render() {
-        return (
-            <div className="Page container">
-                <PageHeader to="home" title={this.state.name} />
-                <div id="codex-editor" />
-            </div>
-        );
+        if (this.state.exists)
+            return (
+                <div className="Page container">
+                    <PageHeader to="home" title={this.state.name} />
+                    <div id="codex-editor" />
+                </div>
+            );
+        else return(null);
     }
 }
 
-export default Page;
+export default withRouter(Page);

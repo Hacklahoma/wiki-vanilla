@@ -120,7 +120,7 @@ class Home extends Component {
                     <Link
                         key={item}
                         className={"link " + this.state.status[item]}
-                        to={"/p/" + item}
+                        to={"/" + item}
                     >
                         <div className="item">
                             <DescriptionOutlined className="icon" />
