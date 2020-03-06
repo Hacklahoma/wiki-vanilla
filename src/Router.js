@@ -13,6 +13,7 @@ function Router() {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/404" component={Home} />
                 <Route exact path="/login" component={Login} />
+                <Route exact path="/fetchUrl" component={Auth} />
                 <Route path="/auth" component={Auth} />
                 <Route path="/:page" component={Page} />
             </Switch>

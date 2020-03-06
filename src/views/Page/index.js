@@ -4,6 +4,14 @@ import PageHeader from "../../components/PageHeader";
 import "./index.scss";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
+import LinkTool from "@editorjs/link";
+import Warning from "@editorjs/warning";
+import List from "@editorjs/list";
+import InlineCode from "@editorjs/inline-code";
+import CodeTool from '@editorjs/code'
+import Checklist from '@editorjs/checklist'
+import Delimiter from '@editorjs/delimiter'
+import Marker from '@editorjs/marker'
 import { withRouter } from "react-router-dom";
 
 class Page extends Component {
@@ -65,6 +73,24 @@ class Page extends Component {
                             defaultLevel: 1,
                         },
                     },
+                    list: {
+                        class: List,
+                        inlineToolbar: true,
+                    },
+                    inlineCode: {
+                        class: InlineCode,
+                        shortcut: "CMD+SHIFT+M",
+                    },
+                    marker: {
+                        class: Marker,
+                        shortcut: "CMD+SHIFT+M",
+                    },
+                    checklist: {
+                        class: Checklist,
+                        inlineToolbar: true,
+                    },
+                    delimiter: Delimiter,
+                    code: CodeTool,
                 },
                 /**
                  * Previously saved data that should be rendered

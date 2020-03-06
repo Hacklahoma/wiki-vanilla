@@ -1,19 +1,19 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import { withRouter } from 'react-router'
+import React, { Component } from "react";
+import axios from "axios";
+import { withRouter } from "react-router";
 
 export class Auth extends Component {
     constructor() {
         super();
         this.state = {
-            user: ""
-        }
+            user: "",
+        };
     }
 
     componentDidMount() {
         // Getting unique code
         const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
+        const code = urlParams.get("code");
         const team = process.env.REACT_APP_SLACK_TEAM_ID;
 
         // Calling slack api
@@ -29,10 +29,10 @@ export class Auth extends Component {
             .then(response => {
                 // Storing user data
                 this.setState({
-                    user: response.data
+                    user: response.data,
                 });
                 console.log(this.state.user);
-                if (response.data.ok && (response.data.team_id === team || team === '')) {
+                if (response.data.ok && (response.data.team_id === team || team === "")) {
                     console.log("Success");
                     this.props.history.push("/?user=" + response.data.access_token);
                 } else {
@@ -42,16 +42,12 @@ export class Auth extends Component {
             })
             .catch(error => {
                 console.log(error);
-                this.props.history.push('/login');
+                this.props.history.push("/login");
             });
-
-        
     }
-    
+
     render() {
-        return (
-            <div></div>
-        )
+        return null;
     }
 }
 
