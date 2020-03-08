@@ -1,20 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, useCallback, useMemo, useState } from "react";
 import firebase from "../../config/firebase";
 import PageHeader from "../../components/PageHeader";
 import "./index.scss";
 import { withRouter } from "react-router-dom";
+import { createEditor } from "slate";
+import { Slate, Editable, withReact } from "slate-react";
 
-class Page extends Component {
-    constructor() {
-        super();
-        this.state = {
-            name: "",
-            doc: null,
-            exists: false,
-        };
-    }
-
-    componentDidMount() {
+const Page = () => {
+    function componentDidMount() {
         console.log(this.props.match.params.page);
 
         // Getting firestore document reference
@@ -42,18 +35,27 @@ class Page extends Component {
                 return;
             }
         });
+        this.setState({
+            editor: editor,
+        });
     }
 
-    render() {
-        if (this.state.exists)
-            return (
-                <div className="Page container">
-                    <PageHeader to="home" title={this.state.name} />
-                    <div id="codex-editor" />
-                </div>
-            );
-        else return(null);
-    }
-}
+    const [value, setValue] = useState([
+        {
+            type: "paragraph",
+            children: [{ text: "A line of text in a paragraph." }],
+        },
+    ]);
+    const editor = useMemo(() => withReact(createEditor()), []);
+
+    return (
+        <div className="Page container">
+            <PageHeader to="home" title={"test"} />
+            <Slate editor={editor} value={value} onChange={value => setValue(value)}>
+                <Editable />
+            </Slate>
+        </div>
+    );
+};
 
 export default withRouter(Page);
