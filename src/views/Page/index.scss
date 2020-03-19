@@ -5,17 +5,34 @@
     // background: sandybrown;
     position: relative;
     text-align: left;
-    h1 {
-        font-weight: 900;
-    }
-    .divider {
-        margin-bottom: 25px;
-    }
-    #codex-editor {
-        margin-top: -20px;
-        // border: 1px solid black;
-        .codex-editor__redactor {
-            padding-bottom: 100px !important;
+    .ck-content {
+        padding: 0 !important;
+        h1, h2, h3, p, ul {
+            margin: 10px 0;
+        }
+        h1, h2, h3 {
+            font-weight: 700;
+        }
+        // strong {
+        //     font-weight: 900;
+        // }
+        .divider {
+            margin-bottom: 25px;
+        }
+        li {
+            margin-left: 20px;
         }
     }
+    .ck-focused {
+        border: none !important;
+        box-shadow: none !important;
+    }
 }
+
+.ck-toolbar-container {
+    // margin-top: 100px !important;
+}
+
+// .second-toolbar {
+//     display: none;
+// }

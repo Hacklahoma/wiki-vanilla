@@ -2,141 +2,125 @@ import React, { Component } from "react";
 import firebase from "../../config/firebase";
 import PageHeader from "../../components/PageHeader";
 import "./index.scss";
-import EditorJS from "@editorjs/editorjs";
-import Header from "@editorjs/header";
-import LinkTool from "@editorjs/link";
-import Warning from "@editorjs/warning";
-import List from "@editorjs/list";
-import InlineCode from "@editorjs/inline-code";
-import CodeTool from '@editorjs/code'
-import Checklist from '@editorjs/checklist'
-import Delimiter from '@editorjs/delimiter'
-import Marker from '@editorjs/marker'
 import { withRouter } from "react-router-dom";
+// import CKEditor from "@ckeditor/ckeditor5-react";
+import InlineEditor from "@ckeditor/ckeditor5-build-inline";
+// import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
+// import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
+// import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic";
+// import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
+// import Underline from "@ckeditor/ckeditor5-basic-styles/src/underline";
+import { Editor } from "react-draft-wysiwyg";
+import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
+
+const editorConfiguration = {
+  //   plugins: [Essentials, Bold, Italic, Paragraph, Underline],
+  toolbar: [
+    "heading",
+    "|",
+    "bold",
+    "italic",
+    "underline",
+    "link",
+    "bulletedList",
+    "numberedList",
+    "code",
+  ],
+};
+
+InlineEditor.builtinPlugins.map(plugin => console.log(plugin.pluginName));
 
 class Page extends Component {
-    constructor() {
-        super();
-        this.state = {
-            name: "",
-            doc: null,
-            editor: null,
-            exists: false,
-        };
-    }
+  constructor() {
+    super();
+    this.state = {
+      name: "",
+      doc: null,
+      exists: false,
+      data: "",
+    };
+  }
 
-    componentDidMount() {
-        console.log(this.props.match.params.page);
+  componentDidMount() {
+    // Getting firestore document reference
+    var setup = firebase
+      .firestore()
+      .collection("pages")
+      .doc(this.props.match.params.page);
 
-        // Getting firestore document reference
-        var setup = firebase
-            .firestore()
-            .collection("pages")
-            .doc(this.props.match.params.page);
+    // Setting reference to state
+    this.setState({
+      doc: setup,
+    });
 
-        // Setting reference to state
+    // ClassicEditor.create(document.querySelector("#editor"), {
+    //   removePlugins: ["Heading", "Link"],
+    //   toolbar: ["bold", "italic", "bulletedList", "numberedList", "blockQuote"],
+    // }).catch(error => {
+    //   console.log(error);
+    // });
+
+    // Getting markdown as raw content and setting to state
+    setup.get().then(doc => {
+      // Making sure document exists before proceeding
+      if (doc.exists) {
         this.setState({
-            doc: setup,
+          exists: true,
+          name: doc.data().name,
+          data: doc.data().data,
         });
+      } else {
+        // Document does not exists, 404.
+        this.props.history.push("/404");
+        return;
+      }
+    });
+  }
 
-        // Getting markdown as raw content and setting to state
-        setup.get().then(doc => {
-            // Making sure document exists before proceeding
-            if (doc.exists) {
-                this.setState({
-                    exists: true,
-                    name: doc.data().name,
-                });
-            } else {
-                // Document does not exists, 404.
-                this.props.history.push("/404");
-                return;
-            }
-
-            // Setting up editor
-            const editor = new EditorJS({
-                /**
-                 * Id of Element that should contain the Editor
-                 */
-                holderId: "codex-editor",
-                /**
-                 * Available Tools list.
-                 * Pass Tool's class or Settings object for each Tool you want to use
-                 */
-                tools: {
-                    // Header tool
-                    header: {
-                        class: Header,
-                        config: {
-                            placeholder: "Enter a header",
-                            levels: [1, 2, 3, 4],
-                            defaultLevel: 1,
-                        },
-                    },
-                    list: {
-                        class: List,
-                        inlineToolbar: true,
-                    },
-                    inlineCode: {
-                        class: InlineCode,
-                        shortcut: "CMD+SHIFT+M",
-                    },
-                    marker: {
-                        class: Marker,
-                        shortcut: "CMD+SHIFT+M",
-                    },
-                    checklist: {
-                        class: Checklist,
-                        inlineToolbar: true,
-                    },
-                    delimiter: Delimiter,
-                    code: CodeTool,
-                },
-                /**
-                 * Previously saved data that should be rendered
-                 */
-                data: doc.data().data,
-                /**
-                 * onReady callback
-                 */
-                onReady: () => {
-                    console.log("Editor.js is ready to work!");
-                },
-                /**
-                 * Fires when something changed in DOM
-                 */
-                onChange: () => {
-                    this.saveData();
-                },
-            });
-            // Saving editor state
-            this.setState({
-                editor: editor,
-            });
-        });
-    }
-
-    saveData() {
-        this.state.editor
-            .save()
-            .then(outputData => {
-                this.state.doc.update({ data: outputData });
-            })
-            .catch(error => {
-                console.log("Saving failed: ", error);
-            });
-    }
-
-    render() {
-        if (this.state.exists)
-            return (
-                <div className="Page container">
-                    <PageHeader to="home" title={this.state.name} />
-                    <div id="codex-editor" />
-                </div>
-            );
-        else return(null);
-    }
+  render() {
+    if (this.state.exists)
+      return (
+        <div className="Page container">
+          <PageHeader to="home" title={this.state.name} />
+          {/* <Editor
+            toolbarOnFocus
+            wrapperClassName="wrapper-class"
+            editorClassName="editor-class"
+            toolbarClassName="toolbar-class"
+            toolbar={{
+              options: [
+                "inline",
+                "blockType",
+                "list",
+              ]
+            }}
+          /> */}
+          {/* <CKEditor
+            editor={InlineEditor}
+            config={editorConfiguration}
+            data={this.state.data}
+            // disabled={true}
+            onInit={editor => {
+              // You can store the "editor" and use when it is needed.
+              console.log("Editor is ready to use!", editor);
+            }}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              //   console.log({ event, editor, data });
+              this.state.doc.update({ data: data });
+            }}
+            onBlur={(event, editor) => {
+              //   console.log("Blur.", editor);
+            }}
+            onFocus={(event, editor) => {
+              //   console.log("Focus.", editor);
+            }}
+          /> */}
+        </div>
+      );
+    else return null;
+  }
 }
 
 export default withRouter(Page);
