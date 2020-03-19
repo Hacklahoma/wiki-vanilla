@@ -11,11 +11,10 @@
     .divider {
         margin-bottom: 25px;
     }
-    #codex-editor {
-        margin-top: -20px;
-        // border: 1px solid black;
-        .codex-editor__redactor {
-            padding-bottom: 100px !important;
-        }
+    .block {
+        margin: 8px 0;
+    }
+    ul {
+        padding-left: 50px;
     }
 }
