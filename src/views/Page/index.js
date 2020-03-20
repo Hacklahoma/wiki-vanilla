@@ -9,15 +9,18 @@ import "react-quill/dist/quill.snow.css";
 class Page extends React.Component {
     constructor(props) {
         super(props);
+        /**
+         * @title Holds the title of the page
+         */
         this.state = {
-            name: "",
+            title: "",
             text: "",
             doc: null,
             exists: false,
             readOnly: true,
         };
         this.handleChange = this.handleChange.bind(this);
-        this.edit = this.edit.bind(this);
+        this.toggleEdit = this.toggleEdit.bind(this);
     }
 
     componentDidMount() {
@@ -39,7 +42,7 @@ class Page extends React.Component {
                 this.setState({
                     exists: true,
                     text: doc.data().data,
-                    name: doc.data().name,
+                    title: doc.data().title,
                 });
                 // Setting up read only mode
                 document.getElementsByClassName("ql-toolbar")[0].classList.add("readOnly");
@@ -51,6 +54,7 @@ class Page extends React.Component {
         });
     }
 
+    // Modules for editor
     modules = {
         toolbar: [
             [{ header: "1" }, { header: "2" }, { header: "3" }],
@@ -61,6 +65,7 @@ class Page extends React.Component {
         ],
     };
 
+    // Formats for editor
     formats = [
         "header",
         "bold",
@@ -76,12 +81,14 @@ class Page extends React.Component {
         "image",
     ];
 
+    // Update database and state when value changes
     handleChange(value) {
         this.setState({ text: value });
         this.state.doc.update({ data: value });
     }
 
-    edit() {
+    // Toggle between read only mode and edit
+    toggleEdit() {
         document.getElementsByClassName("ql-toolbar")[0].classList.toggle("readOnly");
         this.setState({
             readOnly: !this.state.readOnly,
@@ -101,15 +108,16 @@ class Page extends React.Component {
         if (this.state.exists)
             return (
                 <div className="Page container">
-                    <PageHeader to="home" title={this.state.name} />
+                    <PageHeader to="home" title={this.state.title} />
                     <ReactQuill
+                        placeholder="There is nothing here..."
                         readOnly={this.state.readOnly}
                         value={this.state.text}
                         onChange={this.handleChange}
                         modules={this.modules}
                         formats={this.formats}
                     />
-                    <p className="edit" onClick={this.edit}>
+                    <p className="edit" onClick={this.toggleEdit}>
                         Edit
                     </p>
                 </div>

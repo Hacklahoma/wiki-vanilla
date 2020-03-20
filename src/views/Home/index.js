@@ -14,7 +14,7 @@ class Home extends Component {
          * @pages stores all the pages from firestore collection 'pages' (use pages[raw-name] for display name, eg. pages[check-in] = 'Check In')
          * @status stores status of page (use status[raw-name] for status)
          * @loading whether component is loading
-         * @name: holds name of new page
+         * @title holds title of new page
          * @category holds category of new page
          * @user holds slack access key of user (stored in localStorage)
          * @renderSettings boolean to render settings popup
@@ -25,7 +25,7 @@ class Home extends Component {
             pages: [],
             status: [],
             loading: true,
-            name: "",
+            title: "",
             category: "",
             user: null,
             renderSettings: false,
@@ -74,7 +74,7 @@ class Home extends Component {
                 var status = [];
                 // Storing names in array
                 snapshot.forEach(doc => {
-                    pages[doc.id] = doc.data().name;
+                    pages[doc.id] = doc.data().title;
                     status[doc.id] = doc.data().status;
                 });
                 // Setting state to store pages
