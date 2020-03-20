@@ -1,33 +1,26 @@
-import React, { Component } from "react";
-import firebase from "../../config/firebase";
+import React from "react";
 import PageHeader from "../../components/PageHeader";
+import firebase from "../../config/firebase";
 import "./index.scss";
-import EditorJS from "@editorjs/editorjs";
-import Header from "@editorjs/header";
-import LinkTool from "@editorjs/link";
-import Warning from "@editorjs/warning";
-import List from "@editorjs/list";
-import InlineCode from "@editorjs/inline-code";
-import CodeTool from '@editorjs/code'
-import Checklist from '@editorjs/checklist'
-import Delimiter from '@editorjs/delimiter'
-import Marker from '@editorjs/marker'
 import { withRouter } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
-class Page extends Component {
-    constructor() {
-        super();
+class Page extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
             name: "",
+            text: "",
             doc: null,
-            editor: null,
             exists: false,
+            readOnly: true,
         };
+        this.handleChange = this.handleChange.bind(this);
+        this.edit = this.edit.bind(this);
     }
 
     componentDidMount() {
-        console.log(this.props.match.params.page);
-
         // Getting firestore document reference
         var setup = firebase
             .firestore()
@@ -45,86 +38,63 @@ class Page extends Component {
             if (doc.exists) {
                 this.setState({
                     exists: true,
+                    text: doc.data().data,
                     name: doc.data().name,
                 });
+                // Setting up read only mode
+                document.getElementsByClassName("ql-toolbar")[0].classList.add("readOnly");
             } else {
                 // Document does not exists, 404.
                 this.props.history.push("/404");
                 return;
             }
-
-            // Setting up editor
-            const editor = new EditorJS({
-                /**
-                 * Id of Element that should contain the Editor
-                 */
-                holderId: "codex-editor",
-                /**
-                 * Available Tools list.
-                 * Pass Tool's class or Settings object for each Tool you want to use
-                 */
-                tools: {
-                    // Header tool
-                    header: {
-                        class: Header,
-                        config: {
-                            placeholder: "Enter a header",
-                            levels: [1, 2, 3, 4],
-                            defaultLevel: 1,
-                        },
-                    },
-                    list: {
-                        class: List,
-                        inlineToolbar: true,
-                    },
-                    inlineCode: {
-                        class: InlineCode,
-                        shortcut: "CMD+SHIFT+M",
-                    },
-                    marker: {
-                        class: Marker,
-                        shortcut: "CMD+SHIFT+M",
-                    },
-                    checklist: {
-                        class: Checklist,
-                        inlineToolbar: true,
-                    },
-                    delimiter: Delimiter,
-                    code: CodeTool,
-                },
-                /**
-                 * Previously saved data that should be rendered
-                 */
-                data: doc.data().data,
-                /**
-                 * onReady callback
-                 */
-                onReady: () => {
-                    console.log("Editor.js is ready to work!");
-                },
-                /**
-                 * Fires when something changed in DOM
-                 */
-                onChange: () => {
-                    this.saveData();
-                },
-            });
-            // Saving editor state
-            this.setState({
-                editor: editor,
-            });
         });
     }
 
-    saveData() {
-        this.state.editor
-            .save()
-            .then(outputData => {
-                this.state.doc.update({ data: outputData });
-            })
-            .catch(error => {
-                console.log("Saving failed: ", error);
-            });
+    modules = {
+        toolbar: [
+            [{ header: "1" }, { header: "2" }, { header: "3" }],
+            ["bold", "italic", "underline", "strike", "blockquote", "code-block"],
+            [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+            ["link", "image"],
+            ["clean"],
+        ],
+    };
+
+    formats = [
+        "header",
+        "bold",
+        "italic",
+        "underline",
+        "strike",
+        "blockquote",
+        "code-block",
+        "list",
+        "bullet",
+        "indent",
+        "link",
+        "image",
+    ];
+
+    handleChange(value) {
+        this.setState({ text: value });
+        this.state.doc.update({ data: value });
+    }
+
+    edit() {
+        document.getElementsByClassName("ql-toolbar")[0].classList.toggle("readOnly");
+        this.setState({
+            readOnly: !this.state.readOnly,
+        });
+        if (this.state.readOnly) {
+            document.getElementsByClassName("edit")[0].innerHTML = "Done";
+            document.getElementsByClassName("ql-header")[0].innerHTML = "H1";
+            document.getElementsByClassName("ql-header")[1].innerHTML = "H2";
+            document.getElementsByClassName("ql-header")[2].innerHTML = "H3";
+        } else {
+            document.getElementsByClassName("edit")[0].innerHTML = "Edit";
+        }
+        window.scroll(0, 0);
     }
 
     render() {
@@ -132,10 +102,19 @@ class Page extends Component {
             return (
                 <div className="Page container">
                     <PageHeader to="home" title={this.state.name} />
-                    <div id="codex-editor" />
+                    <ReactQuill
+                        readOnly={this.state.readOnly}
+                        value={this.state.text}
+                        onChange={this.handleChange}
+                        modules={this.modules}
+                        formats={this.formats}
+                    />
+                    <p className="edit" onClick={this.edit}>
+                        Edit
+                    </p>
                 </div>
             );
-        else return(null);
+        else return "Loading...";
     }
 }
 

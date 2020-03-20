@@ -29,7 +29,7 @@ class Home extends Component {
             category: "",
             user: null,
             renderSettings: false,
-            renderNewPage: false
+            renderNewPage: false,
         };
         this.handleClick = this.handleClick.bind(this);
         this.closePopup = this.closePopup.bind(this);
@@ -43,7 +43,7 @@ class Home extends Component {
             localStorage.setItem("user", user);
         }
         this.setState({
-            user: localStorage.getItem("user")
+            user: localStorage.getItem("user"),
         });
         if (localStorage.getItem("user") === null) {
             this.props.history.push("/login");
@@ -60,7 +60,7 @@ class Home extends Component {
             .get()
             .then(doc => {
                 this.setState({
-                    categories: doc.data().categories
+                    categories: doc.data().categories,
                 });
             });
 
@@ -80,7 +80,7 @@ class Home extends Component {
                 // Setting state to store pages
                 this.setState({
                     pages: pages,
-                    status: status
+                    status: status,
                 });
             })
             .then(() => {
@@ -117,11 +117,7 @@ class Home extends Component {
                 item = this.state.categories[category][page];
                 // Adding each individual category item to result
                 categoryContainer.push(
-                    <Link
-                        key={item}
-                        className={"link " + this.state.status[item]}
-                        to={"/" + item}
-                    >
+                    <Link key={item} className={"link " + this.state.status[item]} to={"/" + item}>
                         <div className="item">
                             <DescriptionOutlined className="icon" />
                             {this.state.pages[item]}
@@ -143,11 +139,11 @@ class Home extends Component {
     handleClick(action) {
         if (action === "settings") {
             this.setState({
-                renderSettings: true
+                renderSettings: true,
             });
         } else if (action === "newPage") {
             this.setState({
-                renderNewPage: true
+                renderNewPage: true,
             });
         }
     }
@@ -156,8 +152,8 @@ class Home extends Component {
         if (event.target.classList.contains("Popup") | event.target.classList.contains("close")) {
             this.setState({
                 renderSettings: false,
-                renderNewPage: false
-            })
+                renderNewPage: false,
+            });
         }
     }
 
