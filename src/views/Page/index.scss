@@ -10,6 +10,22 @@
     .divider {
         margin-bottom: 25px;
     }
+    .toc {
+        color: rgb(122, 122, 122);
+        margin-bottom: 30px;
+        .toc-2 {
+            margin-left: 20px;
+        }
+        .toc-3 {
+            margin-left: 40px;
+        }
+    }
+    .toc-item {
+        cursor: pointer;
+    }
+    .toc-item:hover {
+        text-decoration: underline;
+    }
     .edit {
         cursor: pointer;
         color: $blue;
