@@ -1,14 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './Router';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./Router";
+import * as serviceWorker from "./serviceWorker";
 import { SnackbarProvider } from "notistack";
+import styled, { ThemeProvider } from 'styled-components';
+
+const theme = {
+    blue: "#3674D4",
+    black: "#1D1D1D",
+};
+
+const StyledApp = styled.div`
+    color: ${theme.black};
+`
 
 ReactDOM.render(
-    <SnackbarProvider maxSnack={3}>
-        <App />
-    </SnackbarProvider>,
+    <ThemeProvider theme={theme}>
+        <SnackbarProvider maxSnack={3}>
+            <StyledApp>
+                <App />
+            </StyledApp>
+        </SnackbarProvider>
+    </ThemeProvider>,
     document.getElementById("root")
 );
 

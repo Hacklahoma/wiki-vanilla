@@ -9,7 +9,7 @@ function Router() {
     return (
         <BrowserRouter>
             <Switch>
-              {/* Check for login here instead of in Home component  */}
+                {/* Check for login here instead of in Home component  */}
                 <Route exact path="/" component={Home} />
                 <Route exact path="/404" component={Home} />
                 <Route exact path="/login" component={Login} />
