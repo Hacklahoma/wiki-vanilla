@@ -45,6 +45,16 @@
             }
             img {
                 clip-path: inset(5px 5px 5px 5px);
+                transition: transform 0.2s;
+            }
+            a {
+                display: inline-block;
+                height: 40px;
+            }
+            a:hover {
+                img {
+                    transform: scale(1.02);
+                }
             }
         }
     }
