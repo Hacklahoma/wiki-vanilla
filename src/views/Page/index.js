@@ -98,10 +98,7 @@ const StyledPage = styled.div`
         .ql-toolbar {
             position: fixed;
             top: 5px;
-            left: 0;
             background: white;
-            width: 100vw;
-            max-width: none;
         }
     }
     .ql-container {
