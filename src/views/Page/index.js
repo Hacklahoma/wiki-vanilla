@@ -87,6 +87,8 @@ const StyledPage = styled.div`
         z-index: 10;
         margin-bottom: 25px;
         text-align: center;
+        background: rgba(255,255,255,0);
+        transition: background .5s;
         .ql-formats {
             display: inline-block;
         }
@@ -96,8 +98,10 @@ const StyledPage = styled.div`
         .ql-toolbar {
             position: fixed;
             top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
+            background: white;
+            width: 100vw;
+            max-width: none;
         }
     }
     .ql-container {
