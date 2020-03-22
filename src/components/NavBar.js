@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
-import logo from '../assets/logo.png';
+import React, { Component } from "react";
+import styled from "styled-components";
+import logo from "../assets/logo.png";
+import create from "../assets/create.svg";
+import settings from "../assets/settings.svg";
 
 const StyledNavBar = styled.div`
     background: white;
@@ -9,8 +11,9 @@ const StyledNavBar = styled.div`
     top: 0;
     left: 0;
     z-index: 10;
-    box-shadow: 1px 1px 4px rgba(0,0,0, 0.1);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
     display: flex;
+    justify-content: space-between;
     .logo {
         margin: 10px 30px;
         display: inline-block;
@@ -29,6 +32,14 @@ const StyledNavBar = styled.div`
             display: inline-block;
         }
     }
+    .rightButtons {
+        margin: 13px 30px 0 0;
+        img {
+            margin: 0 10px;
+            height: 22px;
+            width: 22px;
+        }
+    }
 `;
 
 export class NavBar extends Component {
@@ -41,9 +52,17 @@ export class NavBar extends Component {
                         <p>Wiki</p>
                     </div>
                 </a>
+                {this.props.home ? (
+                    <div>
+                        <div className="rightButtons">
+                            <img src={create} alt="create" />
+                            <img src={settings} alt="settings" />
+                        </div>
+                    </div>
+                ) : null}
             </StyledNavBar>
         );
     }
 }
 
-export default NavBar
+export default NavBar;

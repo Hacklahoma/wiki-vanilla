@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import firebase from "../../config/firebase";
-import { DescriptionOutlined, Settings, Create } from "@material-ui/icons";
+import { DescriptionOutlined } from "@material-ui/icons";
 import { withRouter } from "react-router";
 import "./index.scss";
 import Popup from "../../components/Popup";
+import NavBar from "../../components/NavBar";
 
 class Home extends Component {
     constructor() {
@@ -158,30 +159,26 @@ class Home extends Component {
     }
 
     render() {
-        if (!this.state.loading)
-            return (
-                <div className="Home">
-                    <div className="container">
-                        <Settings
-                            onClick={() => this.handleClick("settings")}
-                            className="actionIcon settingsIcon"
-                        />
-                        <Create
-                            onClick={() => this.handleClick("newPage")}
-                            className="actionIcon newPageIcon"
-                        />
-                        <h1 className="header">Hacklahoma Wiki</h1>
-                        <div className="grid">{this.renderCategories()}</div>
+        return (
+            <div className="Home">
+                <NavBar home />
+                {this.state.loading ? (
+                    <p style={{marginTop: '55px'}}>Loading...</p>
+                ) : (
+                    <div>
+                        <div className="container" style={{marginTop: '50px'}}>
+                            <div className="grid">{this.renderCategories()}</div>
+                        </div>
+                        {this.state.renderNewPage ? (
+                            <Popup closePopup={this.closePopup} type="newPage" />
+                        ) : null}
+                        {this.state.renderSettings ? (
+                            <Popup closePopup={this.closePopup} type="settings" />
+                        ) : null}
                     </div>
-                    {this.state.renderNewPage ? (
-                        <Popup closePopup={this.closePopup} type="newPage" />
-                    ) : null}
-                    {this.state.renderSettings ? (
-                        <Popup closePopup={this.closePopup} type="settings" />
-                    ) : null}
-                </div>
-            );
-        else return <div>Loading...</div>;
+                )}
+            </div>
+        );
     }
 }
 

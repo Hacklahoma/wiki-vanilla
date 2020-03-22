@@ -404,33 +404,37 @@ class Page extends React.Component {
     }
 
     render() {
-        if (this.state.exists)
-            return (
-                <StyledPage className="container">
-                    <NavBar />
-                    <div className="content">
-                        <Link to="/" className="button">
-                            <HomeRounded className="icon" />
-                            <p>Home</p>
-                        </Link>
-                        <h1>{this.state.title}</h1>
-                        <div className="divider" />
-                        {this.renderToC()}
-                        <ReactQuill
-                            placeholder="There is nothing here..."
-                            readOnly={this.state.readOnly}
-                            value={this.state.text}
-                            onChange={this.handleChange}
-                            modules={this.modules}
-                            formats={this.formats}
-                        />
-                        <p className="edit" onClick={this.toggleEdit}>
-                            Edit
-                        </p>
-                    </div>
-                </StyledPage>
-            );
-        else return "Loading...";
+        return (
+            <StyledPage className="container">
+                <NavBar />
+                <div className="content">
+                    <Link to="/" className="button">
+                        <HomeRounded className="icon" />
+                        <p>Home</p>
+                    </Link>
+                    {this.state.exists ? (
+                        <div>
+                            <h1>{this.state.title}</h1>
+                            <div className="divider" />
+                            {this.renderToC()}
+                            <ReactQuill
+                                placeholder="There is nothing here..."
+                                readOnly={this.state.readOnly}
+                                value={this.state.text}
+                                onChange={this.handleChange}
+                                modules={this.modules}
+                                formats={this.formats}
+                            />
+                            <p className="edit" onClick={this.toggleEdit}>
+                                Edit
+                            </p>
+                        </div>
+                    ) : (
+                        <p>Loading...</p>
+                    )}
+                </div>
+            </StyledPage>
+        );
     }
 }
 
