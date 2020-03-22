@@ -87,8 +87,8 @@ const StyledPage = styled.div`
         z-index: 10;
         margin-bottom: 25px;
         text-align: center;
-        background: rgba(255,255,255,0);
-        transition: background .5s;
+        background: rgba(255, 255, 255, 0);
+        transition: background 0.5s;
         .ql-formats {
             display: inline-block;
         }
@@ -99,6 +99,42 @@ const StyledPage = styled.div`
             position: fixed;
             top: 5px;
             background: white;
+        }
+    }
+    .ql-toolbar {
+        position: relative;
+        display: inline-block;
+        width: 100vw;
+        max-width: 650px;
+        border: none !important;
+        z-index: 10;
+        margin-bottom: 25px;
+        margin-left: -5vw;
+        text-align: center;
+        background: rgba(255, 255, 255, 0);
+        transition: background 0.5s;
+        .ql-formats {
+            display: inline-block;
+        }
+    }
+    .quill.fixed {
+        margin-top: 95px;
+        .ql-toolbar {
+            position: fixed;
+            top: 5px;
+            left: 0;
+            background: white;
+            width: 100vw;
+            margin-left: 0;
+            max-width: none;
+        }
+    }
+    @media (max-width: 538px) {
+        .quill.fixed {
+            margin-top: 120px;
+            .ql-toolbar {
+                margin-left: 0;
+            }
         }
     }
     .ql-container {
