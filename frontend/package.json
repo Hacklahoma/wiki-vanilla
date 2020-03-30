@@ -1,0 +1,21 @@
+{
+    "name": "wiki",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "next build",
+        "start": "next"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@apollo/client": "^3.0.0-beta.41",
+        "graphql": "^14.6.0",
+        "next": "^9.3.1",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "styled-components": "^5.0.1"
+    }
+}
