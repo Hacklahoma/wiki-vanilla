@@ -1,8 +1,8 @@
 import { useQuery, gql } from "@apollo/client";
-import Meta from "../components/Meta";
 import { useRouter } from "next/router";
 import Link from 'next/link'
 import Error from "next/error";
+import Head from 'next/head'
 
 const GET_PAGE = gql`
     query Page($id: ID!) {
@@ -28,8 +28,10 @@ function Page(props) {
 
     return (
         <div>
-            <Meta title={data.page.name} />
-            <Link href='/'>
+            <Head>
+                <title>{data.page.name} • Wiki</title>
+            </Head>
+            <Link href="/">
                 <a>Home</a>
             </Link>
             <p>/{data.page.id}</p>

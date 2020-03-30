@@ -1,0 +1,29 @@
+@font-face {
+    font-family: "Avenir";
+    src: url(./assets/fonts/Avenir/Avenir-Heavy.ttf);
+    font-weight: 900;
+}
+@font-face {
+    font-family: "Avenir";
+    src: url(./assets/fonts/Avenir/Avenir-Medium.ttf);
+    font-weight: 700;
+}
+@font-face {
+    font-family: "Avenir";
+    src: url(./assets/fonts/Avenir/Avenir-Book.ttf);
+    font-weight: 400;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    text-align: center;
+    font-family: "Avenir", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}

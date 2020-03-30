@@ -1,10 +1,11 @@
 import { useQuery, gql } from "@apollo/client";
-import Page from "./[page]";
+import Head from 'next/head'
 
 const PAGES = gql`
     {
         pages(where: { id: "demo-page" }) {
             id
+            name
         }
     }
 `;
@@ -17,7 +18,14 @@ function Index() {
     /** RETURN Error */
     if (error) return <p>{error.message}</p>;
     /** RETURN Dashboard */
-    return <div>Dashboard</div>;
+    return (
+        <div>
+            <Head>
+                <title>Wiki</title>
+            </Head>
+            Dashboard
+        </div>
+    );
 }
 
 export default Index;
